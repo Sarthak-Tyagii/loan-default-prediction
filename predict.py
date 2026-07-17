@@ -1,4 +1,3 @@
-import os
 import json
 import numpy as np
 
@@ -6,12 +5,9 @@ from logistic_regression import predict_probability
 from model_io import load_model
 from preprocessing import preprocess_customer
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-
+PROJECT_DIR = "C:/Users/msiindia/Desktop/loan_default_prediction/"
 
 # Risk Level
-
 
 def risk_level(probability):
 
