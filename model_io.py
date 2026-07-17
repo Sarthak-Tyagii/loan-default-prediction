@@ -1,11 +1,8 @@
-import os
 import numpy as np
 
-# Project root (one level up from utils/), so saving/loading works no
-# matter which directory the script is launched from.
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-WEIGHTS_PATH = os.path.join(BASE_DIR, "weights.npy")
-BIAS_PATH = os.path.join(BASE_DIR, "bias.npy")
+PROJECT_DIR = "C:/Users/msiindia/Desktop/loan_default_prediction/"
+WEIGHTS_PATH = PROJECT_DIR + "weights.npy"
+BIAS_PATH = PROJECT_DIR + "bias.npy"
 
 
 # Save Model
