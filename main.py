@@ -1,4 +1,3 @@
-import os
 import json
 import numpy as np
 import pandas as pd
@@ -15,9 +14,10 @@ from metrics import classification_report
 from visualization import plot_cost
 from model_io import save_model, load_model
 from feature_importance import feature_importance
+from predict import predict_customer
 
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_DIR = "C:/Users/msiindia/Desktop/loan_default_prediction/"
 
 VALID_AGE_GROUPS = ["<25", "25-34", "35-44", "45-54", "55-64", "65-74", ">74"]
 VALID_GENDERS = ["Male", "Female", "Joint", "Sex Not Available"]
@@ -27,7 +27,7 @@ VALID_OCCUPANCY = ["pr", "sr", "ir"]
 
 def train():
 
-    file_path = os.path.join(BASE_DIR, "Loan_Default.csv")
+    file_path = PROJECT_DIR + "Loan_Default.csv"
 
     X_train, X_test, y_train, y_test = preprocess(file_path)
 
@@ -47,7 +47,7 @@ def train():
     classification_report(y_test, predictions)
 
     feature_names = np.load(
-        os.path.join(BASE_DIR, "feature_names.npy"),
+        PROJECT_DIR + "feature_names.npy",
         allow_pickle=True
     ).tolist()
     feature_importance(weights, feature_names)
@@ -69,7 +69,7 @@ def ask_choice(prompt, valid_options):
         print(f"  Invalid value. Please choose one of: {options_str}")
 
 
-def predict_customer():
+def customer():
 
     weights, bias = load_model()
 
@@ -104,25 +104,15 @@ def predict_customer():
     # Uses the SAME fill + normalization stats computed during training,
     # so the numbers the model sees at prediction time are on the same
     # scale as the numbers it was trained on.
-    customer_array = preprocess_customer(
+     customer_array = preprocess_customer(
         customer,
         feature_names,
         fill_values,
         norm_stats
     )
 
-    probability = predict_probability(
-        customer_array,
-        weights,
-        bias
-    )[0][0]
-
-    print("\nProbability :", round(probability * 100, 2), "%")
-
-    if probability >= 0.5:
-        print("Prediction : Default")
-    else:
-        print("Prediction : Non Default")
+   
+    predict_customer(customer_array, weights, bias)
 
 
 if __name__ == "__main__":
@@ -145,7 +135,7 @@ if __name__ == "__main__":
 
         elif choice == "2":
             try:
-                predict_customer()
+                customer()
             except FileNotFoundError:
                 print("\nNo trained model found. Please train the model first (Option 1).")
 
