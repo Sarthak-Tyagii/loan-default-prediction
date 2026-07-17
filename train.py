@@ -1,4 +1,3 @@
-import os
 import numpy as np
 from model_io import save_model
 from visualization import plot_cost
@@ -18,10 +17,7 @@ from metrics import (
 
 # Load and Preprocess Dataset
 
-
-# Relative path -> works regardless of who runs it / which machine
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(BASE_DIR, "Loan_Default.csv")
+file_path = "C:/Users/msiindia/Desktop/loan_default_prediction/Loan_Default.csv"
 
 X_train, X_test, y_train, y_test = preprocess(file_path)
 
@@ -29,7 +25,6 @@ print("\nData Preprocessing Completed")
 
 print("Training Samples :", X_train.shape[0])
 print("Testing Samples  :", X_test.shape[0])
-
 
 
 # Train Logistic Regression
